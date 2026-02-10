@@ -1,52 +1,47 @@
-**Add a cover photo like:**
-![placeholder image](https://via.placeholder.com/1200x600)
+# Creating a user
 
-# New post title here
+Creating a user in App Server 1 with non interactive shell.
 
-## Introduction
+<img width="752" height="215" alt="image" src="https://github.com/user-attachments/assets/7853a809-4cf7-4b69-9965-882dfecd90de" />
 
-✍️ (Why) Explain in one or two sentences why you choose to do this project or cloud topic for your day's study.
+To Create a user
 
-## Prerequisite
+<img width="752" height="195" alt="image" src="https://github.com/user-attachments/assets/ca116e36-cd44-44fe-9048-46f0b7190379" />
 
-✍️ (What) Explain in one or two sentences the base knowledge a reader would need before describing the the details of the cloud service or topic.
+To Verify that it actually created with no non-interactive shell
 
-## Use Case
+<img width="752" height="195" alt="image" src="https://github.com/user-attachments/assets/63acb678-b2d5-4b72-9c56-750614b11495" />
 
-- 🖼️ (Show-Me) Create an graphic or diagram that illustrate the use-case of how this knowledge could be applied to real-world project
-- ✍️ (Show-Me) Explain in one or two sentences the use case
+## What is Non-Interactive User
 
-## Cloud Research
+Creating a user with a non-interactive shell (like /usr/sbin/nologin or /bin/false) is mainly done to stop that user from logging into the server normally.
 
-- ✍️ Document your trial and errors. Share what you tried to learn and understand about the cloud topic or while completing micro-project.
-- 🖼️ Show as many screenshot as possible so others can experience in your cloud research.
+## Purpose (why it’s used)
 
-## Try yourself
+### Security
 
-✍️ Add a mini tutorial to encourage the reader to get started learning something new about the cloud.
+If the account is only meant for a service (not a real human), you don’t want anyone to SSH into it.
 
-### Step 1 — Summary of Step
+Example:
 
-![Screenshot](https://via.placeholder.com/500x300)
+```
+nginx
+www-data
+postgres
+redis
+```
 
-### Step 1 — Summary of Step
+These users exist just so services can run with limited permissions.
 
-![Screenshot](https://via.placeholder.com/500x300)
+### For Example
 
-### Step 3 — Summary of Step
+We create a directory and put some files in it and dont want any other user to access them or write in that directory. we will create a non interactive user and gives directory ownership to that user. Now this directory belongs only to this user and no other user can access. And this user dont have any way to get a shell. So this directory cant be accessed. 
 
-![Screenshot](https://via.placeholder.com/500x300)
-
-## ☁️ Cloud Outcome
-
-✍️ (Result) Describe your personal outcome, and lessons learned.
-
-## Next Steps
-
-✍️ Describe what you think you think you want to do next.
-
-## Social Proof
-
-✍️ Show that you shared your process on Twitter or LinkedIn
-
-[link](link)
+### Format of /etc/passwd is like this:
+```
+username:x:UID:GID:comment:home_directory:login_shell
+```
+So in your case:
+```
+ravi:x:100x:100x::/home/ravi:/usr/sbin/nologin
+```
