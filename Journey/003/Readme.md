@@ -1,52 +1,35 @@
-**Add a cover photo like:**
-![placeholder image](https://via.placeholder.com/1200x600)
+# Disable Direct SSH root Login
 
-# New post title here
+Direct root SSH login: Logging into a server over SSH using the root account (username root).
 
-## Introduction
+**Why restrict it:**
+- Direct root access is risky because if the password is compromised, the attacker has full control.
+- Best practice is to log in as a regular user and use sudo for administrative tasks.
 
-✍️ (Why) Explain in one or two sentences why you choose to do this project or cloud topic for your day's study.
+Task: Disable root login for SSH on all application servers.
 
-## Prerequisite
+To disable direct root ssh login. First we get inside the app server
 
-✍️ (What) Explain in one or two sentences the base knowledge a reader would need before describing the the details of the cloud service or topic.
+<img width="771" height="159" alt="image" src="https://github.com/user-attachments/assets/74e33540-1d4a-4b4d-9ed1-fd10c7c83838" />
 
-## Use Case
+```sudo vi /etc/ssh/sshd_config```
 
-- 🖼️ (Show-Me) Create an graphic or diagram that illustrate the use-case of how this knowledge could be applied to real-world project
-- ✍️ (Show-Me) Explain in one or two sentences the use case
+<img width="771" height="22" alt="image" src="https://github.com/user-attachments/assets/edb47832-aa87-4827-8706-68e185c1d2bd" />
 
-## Cloud Research
+**Find the line:**
+```PermitRootLogin yes```
 
-- ✍️ Document your trial and errors. Share what you tried to learn and understand about the cloud topic or while completing micro-project.
-- 🖼️ Show as many screenshot as possible so others can experience in your cloud research.
+**Change it to:**
+```PermitRootLogin no```
 
-## Try yourself
+<img width="771" height="106" alt="image" src="https://github.com/user-attachments/assets/1f1cf5ca-adc9-4bfe-9556-7b78ec35da72" />
 
-✍️ Add a mini tutorial to encourage the reader to get started learning something new about the cloud.
+**Restart SSH service**
+```sudo systemctl restart sshd```
 
-### Step 1 — Summary of Step
+**Verify**
+```sudo grep PermitRootLogin /etc/ssh/sshd_config```
 
-![Screenshot](https://via.placeholder.com/500x300)
+<img width="771" height="95" alt="image" src="https://github.com/user-attachments/assets/fe414ae8-3178-4104-b4f6-445c33d5eb53" />
 
-### Step 1 — Summary of Step
-
-![Screenshot](https://via.placeholder.com/500x300)
-
-### Step 3 — Summary of Step
-
-![Screenshot](https://via.placeholder.com/500x300)
-
-## ☁️ Cloud Outcome
-
-✍️ (Result) Describe your personal outcome, and lessons learned.
-
-## Next Steps
-
-✍️ Describe what you think you think you want to do next.
-
-## Social Proof
-
-✍️ Show that you shared your process on Twitter or LinkedIn
-
-[link](link)
+Repeat the same for other two App Servers
